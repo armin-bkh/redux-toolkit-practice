@@ -3,7 +3,7 @@ const TodoItem = ({ value, checked, onDelete, onCheck }) => {
     <li className="todoItem">
       <p onClick={onCheck} className={checked ? "checkedItem" : null}>
         {value}
-      </p>{" "}
+      </p>
       <button onClick={onDelete}>Delete</button>
     </li>
   );

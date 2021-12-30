@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodoHandler } from "../../features/TodosSlice/TodosSlice";
+import { addTodo } from "../../features/TodosSlice/TodosSlice";
 
 const TodoForm = () => {
   const [formValue, setFormValue] = useState("");
@@ -11,7 +11,7 @@ const TodoForm = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    if (formValue) dispatch(addTodoHandler(formValue));
+    if (formValue) dispatch(addTodo({ title: formValue }));
   };
   return (
     <form className="todoForm" onSubmit={submitHandler}>

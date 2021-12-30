@@ -1,8 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import {
-  checkTodoHandler,
-  deleteTodoHandler,
-} from "../../features/TodosSlice/TodosSlice";
+import { checkTodo, deleteTodo } from "../../features/TodosSlice/TodosSlice";
 import TodoItem from "../TodoItem/TodoItem";
 
 const TodoList = () => {
@@ -10,11 +7,11 @@ const TodoList = () => {
   const dispatch = useDispatch();
 
   const removeHandler = (id) => {
-    dispatch(deleteTodoHandler(id));
+    dispatch(deleteTodo({ id }));
   };
 
   const checkHandler = (id) => {
-    dispatch(checkTodoHandler(id));
+    dispatch(checkTodo({ id }));
   };
 
   return (

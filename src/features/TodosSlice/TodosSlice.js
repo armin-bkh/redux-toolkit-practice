@@ -12,28 +12,23 @@ const todosSlice = createSlice({
   name: "todos",
   initialState,
   reducers: {
-    addTodoHandler: (state, action) => {
+    addTodo: (state, action) => {
       state.push({
-        value: action.payload,
+        value: action.payload.title,
         checked: false,
         id: new Date().getTime(),
       });
     },
-    checkTodoHandler: (state, action) => {
-      const index = state.findIndex((todo) => todo.id === action.payload);
+    checkTodo: (state, action) => {
+      const index = state.findIndex((todo) => todo.id === action.payload.id);
       state[index].checked = !state[index].checked;
     },
-    deleteTodoHandler: (state, action) => {
-      return state.filter((todo) => todo.id !== action.payload);
+    deleteTodo: (state, action) => {
+      return state.filter((todo) => todo.id !== action.payload.id);
     },
-    editTodoHandler: (state, action) => {},
+    editTodo: (state, action) => {},
   },
 });
 
-export const {
-  addTodoHandler,
-  checkTodoHandler,
-  editTodoHandler,
-  deleteTodoHandler,
-} = todosSlice.actions;
+export const { addTodo, checkTodo, editTodo, deleteTodo } = todosSlice.actions;
 export default todosSlice.reducer;

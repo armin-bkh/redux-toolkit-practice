@@ -1,5 +1,12 @@
+import { useSelector } from "react-redux";
+
 const TodoCompleteItems = () => {
-  return <div className="complete">complete todos 5</div>;
+  const todos = useSelector((state) => state.todos);
+  return (
+    <div className="complete">
+      complete todos {todos.filter((todo) => todo.checked).length}
+    </div>
+  );
 };
 
 export default TodoCompleteItems;
