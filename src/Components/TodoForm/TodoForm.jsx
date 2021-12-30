@@ -1,9 +1,9 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodo } from "../../features/TodosSlice/TodosSlice";
+import { addTodo, editTodo } from "../../features/TodosSlice/TodosSlice";
 
-const TodoForm = () => {
-  const [formValue, setFormValue] = useState("");
+const TodoForm = ({ onSubmit, value }) => {
+  const [formValue, setFormValue] = useState(value ? value : "");
   const dispatch = useDispatch();
 
   const changeHandler = (e) => {
@@ -11,12 +11,19 @@ const TodoForm = () => {
   };
   const submitHandler = (e) => {
     e.preventDefault();
-    if (formValue) dispatch(addTodo({ title: formValue }));
+    if (value) {
+      onSubmit(formValue);
+      return;
+    }
+    if (formValue) {
+      dispatch(addTodo({ title: formValue }));
+      setFormValue("");
+    }
   };
   return (
     <form className="todoForm" onSubmit={submitHandler}>
-      <input type="text" value={formValue} onChange={changeHandler} />
-      <button type="submit">Add</button>
+      <input autoFocus type="text" value={formValue} onChange={changeHandler} />
+      <button type="submit">{value ? "Edit" : "Add"}</button>
     </form>
   );
 };

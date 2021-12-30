@@ -22,17 +22,20 @@ const todosSlice = createSlice({
       });
     },
     checkTodo: (state, action) => {
-      const index = state.todos.findIndex(
+      const selectedTodo = state.todos.find(
         (todo) => todo.id === action.payload.id
       );
-      state.todos[index].checked = !state.todos[index].checked;
+      selectedTodo.checked = !selectedTodo.checked;
     },
     deleteTodo: (state, action) => {
-      return {
-        todos: state.todos.filter((todo) => todo.id !== action.payload.id),
-      };
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
-    editTodo: (state, action) => {},
+    editTodo: (state, action) => {
+      const selectedTodo = state.todos.find(
+        (todo) => todo.id === action.payload.id
+      );
+      selectedTodo.value = action.payload.title;
+    },
   },
 });
 
