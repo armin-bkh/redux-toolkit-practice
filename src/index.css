@@ -4,6 +4,68 @@
     box-sizing: border-box;
 }
 
+body{
+    padding: 2rem;
+}
+
 button{
     cursor: pointer;
+}
+
+.todoForm{
+    display: flex;
+    align-items: center;
+}
+
+.todoForm input {
+    flex-grow: 1;
+    border-radius: 5px 0 0 5px;
+    border: 1px solid #ccc;
+    color: #0891b2;
+}
+
+.todoForm input, .todoForm button {
+    padding: 10px 15px;
+    outline: none;
+}
+.todoForm button{
+    border: none;
+    background: #0891b2;
+    color: #fff;
+    border-radius: 0 5px 5px 0;
+    border: 1px #0891b2 solid;
+}
+
+
+.todoItem{
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    border: 1px #ccc solid;
+    border-radius: 5px;
+}
+
+.todoItem p{
+    flex-grow: 1;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.todoItem button{
+    padding: 10px 15px;
+    background: #dc2626;
+    border: 1px solid #dc2626;
+    color: #fff;
+    border-radius: 5px;
+}
+
+.checkedItem{
+    text-decoration: 1px line-through #ccc;
+    color: #ccc;
+}
+
+.complete{
+    text-align: center;
+    font-size: 2rem;
+    color: #0891b2;
 }
