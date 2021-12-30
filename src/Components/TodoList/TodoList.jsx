@@ -3,7 +3,7 @@ import { checkTodo, deleteTodo } from "../../features/TodosSlice/TodosSlice";
 import TodoItem from "../TodoItem/TodoItem";
 
 const TodoList = () => {
-  const todos = useSelector((state) => state.todos);
+  const { todos } = useSelector((state) => state.todos);
   const dispatch = useDispatch();
 
   const removeHandler = (id) => {
