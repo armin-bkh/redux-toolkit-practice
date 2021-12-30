@@ -5,6 +5,7 @@ import {
   deleteTodo,
   editTodo,
 } from "../../features/TodosSlice/TodosSlice";
+import TodoCompleteItems from "../TodoCompleteItems/TodoCompleteItems";
 import TodoForm from "../TodoForm/TodoForm";
 import TodoItem from "../TodoItem/TodoItem";
 
@@ -28,19 +29,26 @@ const TodoList = () => {
 
   return (
     <div>
-      {todos.map((todo) =>
-        todo.id === edit?.id ? (
-          <TodoForm key={todo.id} onSubmit={editHandler} value={todo.value} />
-        ) : (
-          <TodoItem
-            key={todo.id}
-            value={todo.value}
-            checked={todo.checked}
-            onDelete={() => removeHandler(todo.id)}
-            onCheck={() => checkHandler(todo.id)}
-            onEdit={() => setEdit(todo)}
-          />
-        )
+      <ul>
+        {todos.map((todo) =>
+          todo.id === edit?.id ? (
+            <TodoForm key={todo.id} onSubmit={editHandler} value={todo.value} />
+          ) : (
+            <TodoItem
+              key={todo.id}
+              value={todo.value}
+              checked={todo.checked}
+              onDelete={() => removeHandler(todo.id)}
+              onCheck={() => checkHandler(todo.id)}
+              onEdit={() => setEdit(todo)}
+            />
+          )
+        )}
+      </ul>
+      {todos.length ? (
+        <TodoCompleteItems />
+      ) : (
+        <h1 className="title">empty todo</h1>
       )}
     </div>
   );
