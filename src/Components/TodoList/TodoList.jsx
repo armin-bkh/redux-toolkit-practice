@@ -1,17 +1,32 @@
+import { useDispatch, useSelector } from "react-redux";
+import {
+  checkTodoHandler,
+  deleteTodoHandler,
+} from "../../features/TodosSlice/TodosSlice";
 import TodoItem from "../TodoItem/TodoItem";
 
 const TodoList = () => {
-  const todos = [
-    { value: "coding", checked: false, id: 1 },
-    { value: "sleep", checked: false, id: 2 },
-    { value: "school", checked: false, id: 3 },
-    { value: "movie", checked: true, id: 4 },
-    { value: "study", checked: false, id: 5 },
-  ];
+  const todos = useSelector((state) => state.todos);
+  const dispatch = useDispatch();
+
+  const removeHandler = (id) => {
+    dispatch(deleteTodoHandler(id));
+  };
+
+  const checkHandler = (id) => {
+    dispatch(checkTodoHandler(id));
+  };
+
   return (
     <div>
       {todos.map((todo) => (
-        <TodoItem key={todo.id} value={todo.value} checked={todo.checked} />
+        <TodoItem
+          key={todo.id}
+          value={todo.value}
+          checked={todo.checked}
+          onDelete={() => removeHandler(todo.id)}
+          onCheck={() => checkHandler(todo.id)}
+        />
       ))}
     </div>
   );

@@ -1,8 +1,10 @@
-const TodoItem = ({ value, checked }) => {
+const TodoItem = ({ value, checked, onDelete, onCheck }) => {
   return (
     <li className="todoItem">
-      <p className={checked ? "checkedItem" : null}>{value}</p>{" "}
-      <button>Delete</button>
+      <p onClick={onCheck} className={checked ? "checkedItem" : null}>
+        {value}
+      </p>{" "}
+      <button onClick={onDelete}>Delete</button>
     </li>
   );
 };
