@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import getTodos from "../../Services/getTodos";
+import postTodo from "../../Services/postTodo";
 
 const initialState = {
   todos: [],
@@ -12,6 +13,23 @@ export const getAsyncTodos = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const { data } = await getTodos();
+      return data;
+    } catch (error) {
+      return rejectWithValue([], error);
+    }
+  }
+);
+
+export const postAsyncTodo = createAsyncThunk(
+  "todos/postAsyncTodos",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const newTodo = {
+        value: payload.title,
+        id: new Date().getTime(),
+        checked: false,
+      };
+      const { data } = await postTodo(newTodo);
       return data;
     } catch (error) {
       return rejectWithValue([], error);
@@ -60,6 +78,16 @@ const todosSlice = createSlice({
     },
     [getAsyncTodos.fulfilled]: (state, action) => {
       return { ...state, error: null, loading: false, todos: action.payload };
+    },
+    [postAsyncTodo.rejected]: (state, action) => {
+      return {
+        ...state,
+        loading: false,
+        error: action.error.message,
+      };
+    },
+    [postAsyncTodo.fulfilled]: (state, action) => {
+      state.todos.push(action.payload);
     },
   },
 });

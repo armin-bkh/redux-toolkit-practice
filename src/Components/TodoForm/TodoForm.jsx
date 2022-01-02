@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addTodo, editTodo } from "../../features/TodosSlice/TodosSlice";
+import {
+  addTodo,
+  editTodo,
+  postAsyncTodo,
+} from "../../features/TodosSlice/TodosSlice";
 
 const TodoForm = ({ onSubmit, value }) => {
   const [formValue, setFormValue] = useState(value ? value : "");
@@ -16,7 +20,7 @@ const TodoForm = ({ onSubmit, value }) => {
       return;
     }
     if (formValue) {
-      dispatch(addTodo({ title: formValue }));
+      dispatch(postAsyncTodo({ title: formValue }));
       setFormValue("");
     }
   };
