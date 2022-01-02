@@ -1,0 +1,9 @@
+{
+  "todos": [
+    { "value": "coding", "id": 1, "checked": false },
+    { "value": "chat", "id": 2, "checked": false },
+    { "value": "movie", "id": 3, "checked": false },
+    { "value": "reading", "id": 4, "checked": false },
+    { "value": "sleep", "id": 5, "checked": false }
+  ]
+}
