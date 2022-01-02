@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import getTodos from "../../Services/getTodos";
 import postTodo from "../../Services/postTodo";
+import putTodo from "../../Services/putTodo";
 
 const initialState = {
   todos: [],
@@ -21,7 +22,7 @@ export const getAsyncTodos = createAsyncThunk(
 );
 
 export const postAsyncTodo = createAsyncThunk(
-  "todos/postAsyncTodos",
+  "todos/postAsyncTodo",
   async (payload, { rejectWithValue }) => {
     try {
       const newTodo = {
@@ -30,6 +31,33 @@ export const postAsyncTodo = createAsyncThunk(
         checked: false,
       };
       const { data } = await postTodo(newTodo);
+      return data;
+    } catch (error) {
+      return rejectWithValue([], error);
+    }
+  }
+);
+
+export const putCheckAsyncTodo = createAsyncThunk(
+  "todos/putCheckAsyncTodo",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await putTodo(payload.id, {
+        checked: payload.checked,
+        value: payload.title,
+      });
+      return data;
+    } catch (error) {
+      return rejectWithValue([], error);
+    }
+  }
+);
+
+export const deleteAsyncTodo = createAsyncThunk(
+  "todos/deleteAsyncTodo",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await deleteTodo(payload.id);
       return data;
     } catch (error) {
       return rejectWithValue([], error);
@@ -79,15 +107,14 @@ const todosSlice = createSlice({
     [getAsyncTodos.fulfilled]: (state, action) => {
       return { ...state, error: null, loading: false, todos: action.payload };
     },
-    [postAsyncTodo.rejected]: (state, action) => {
-      return {
-        ...state,
-        loading: false,
-        error: action.error.message,
-      };
-    },
     [postAsyncTodo.fulfilled]: (state, action) => {
       state.todos.push(action.payload);
+    },
+    [putCheckAsyncTodo.fulfilled]: (state, action) => {
+      const selectedTodo = state.todos.find(
+        (todo) => todo.id === action.payload.id
+      );
+      selectedTodo.checked = action.payload.checked;
     },
   },
 });

@@ -5,6 +5,7 @@ import {
   deleteTodo,
   editTodo,
   getAsyncTodos,
+  putCheckAsyncTodo,
 } from "../../features/TodosSlice/TodosSlice";
 import TodoCompleteItems from "../TodoCompleteItems/TodoCompleteItems";
 import TodoForm from "../TodoForm/TodoForm";
@@ -23,8 +24,8 @@ const TodoList = () => {
     dispatch(deleteTodo({ id }));
   };
 
-  const checkHandler = (id) => {
-    dispatch(checkTodo({ id }));
+  const checkHandler = (id, checked, title) => {
+    dispatch(putCheckAsyncTodo({ id, checked: !checked, title }));
   };
 
   const editHandler = (value) => {
@@ -53,7 +54,7 @@ const TodoList = () => {
                 value={todo.value}
                 checked={todo.checked}
                 onDelete={() => removeHandler(todo.id)}
-                onCheck={() => checkHandler(todo.id)}
+                onCheck={() => checkHandler(todo.id, todo.checked, todo.value)}
                 onEdit={() => setEdit(todo)}
               />
             )
