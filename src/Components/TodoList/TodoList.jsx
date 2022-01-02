@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   checkTodo,
+  deleteAsyncTodo,
   deleteTodo,
   editTodo,
   getAsyncTodos,
@@ -21,7 +22,7 @@ const TodoList = () => {
   }, []);
 
   const removeHandler = (id) => {
-    dispatch(deleteTodo({ id }));
+    dispatch(deleteAsyncTodo({ id }));
   };
 
   const checkHandler = (id, checked, title) => {
@@ -39,8 +40,7 @@ const TodoList = () => {
   return (
     <div>
       <ul>
-        {todos &&
-          todos.length &&
+        {todos.length &&
           todos.map((todo) =>
             todo.id === edit?.id ? (
               <TodoForm
@@ -60,7 +60,7 @@ const TodoList = () => {
             )
           )}
       </ul>
-      {todos && todos.length ? (
+      {todos.length ? (
         <TodoCompleteItems />
       ) : (
         <h1 className="title">empty todo</h1>

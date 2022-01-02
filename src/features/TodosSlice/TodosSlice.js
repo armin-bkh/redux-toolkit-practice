@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import getTodos from "../../Services/getTodos";
 import postTodo from "../../Services/postTodo";
 import putTodo from "../../Services/putTodo";
+import deleteTodo from "../../Services/deleteTodo";
 
 const initialState = {
   todos: [],
@@ -58,6 +59,7 @@ export const deleteAsyncTodo = createAsyncThunk(
   async (payload, { rejectWithValue }) => {
     try {
       const { data } = await deleteTodo(payload.id);
+      return payload;
       return data;
     } catch (error) {
       return rejectWithValue([], error);
@@ -116,8 +118,11 @@ const todosSlice = createSlice({
       );
       selectedTodo.checked = action.payload.checked;
     },
+    [deleteAsyncTodo.fulfilled]: (state, action) => {
+      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
+    },
   },
 });
 
-export const { addTodo, checkTodo, editTodo, deleteTodo } = todosSlice.actions;
+export const { addTodo, checkTodo, editTodo } = todosSlice.actions;
 export default todosSlice.reducer;
