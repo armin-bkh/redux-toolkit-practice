@@ -17,7 +17,7 @@ export const getAsyncTodos = createAsyncThunk(
       const { data } = await getTodos();
       return data;
     } catch (error) {
-      return rejectWithValue([], error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -34,7 +34,7 @@ export const postAsyncTodo = createAsyncThunk(
       const { data } = await postTodo(newTodo);
       return data;
     } catch (error) {
-      return rejectWithValue([], error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -49,7 +49,7 @@ export const putCheckAsyncTodo = createAsyncThunk(
       });
       return data;
     } catch (error) {
-      return rejectWithValue([], error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -62,7 +62,7 @@ export const deleteAsyncTodo = createAsyncThunk(
       return payload;
       return data;
     } catch (error) {
-      return rejectWithValue([], error);
+      return rejectWithValue(error);
     }
   }
 );
@@ -98,28 +98,26 @@ const todosSlice = createSlice({
     [getAsyncTodos.pending]: (state, action) => {
       return { ...state, error: null, loading: true, todos: [] };
     },
-    [getAsyncTodos.rejected]: (state, action) => {
+    [getAsyncTodos.rejected]: (state, { payload }) => {
       return {
         ...state,
-        error: action.error.message,
+        error: payload.message,
         loading: false,
         todos: [],
       };
     },
-    [getAsyncTodos.fulfilled]: (state, action) => {
-      return { ...state, error: null, loading: false, todos: action.payload };
+    [getAsyncTodos.fulfilled]: (state, { payload }) => {
+      return { ...state, error: null, loading: false, todos: payload };
     },
-    [postAsyncTodo.fulfilled]: (state, action) => {
-      state.todos.push(action.payload);
+    [postAsyncTodo.fulfilled]: (state, { payload }) => {
+      state.todos.push(payload);
     },
-    [putCheckAsyncTodo.fulfilled]: (state, action) => {
-      const selectedTodo = state.todos.find(
-        (todo) => todo.id === action.payload.id
-      );
-      selectedTodo.checked = action.payload.checked;
+    [putCheckAsyncTodo.fulfilled]: (state, { payload }) => {
+      const selectedTodo = state.todos.find((todo) => todo.id === payload.id);
+      selectedTodo.checked = payload.checked;
     },
-    [deleteAsyncTodo.fulfilled]: (state, action) => {
-      state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
+    [deleteAsyncTodo.fulfilled]: (state, { payload }) => {
+      state.todos = state.todos.filter((todo) => todo.id !== payload.id);
     },
   },
 });
