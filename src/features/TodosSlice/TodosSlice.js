@@ -58,11 +58,22 @@ export const deleteAsyncTodo = createAsyncThunk(
   "todos/deleteAsyncTodo",
   async (payload, { rejectWithValue }) => {
     try {
-      const { data } = await deleteTodo(payload.id);
+      await deleteTodo(payload.id);
       return payload;
-      return data;
     } catch (error) {
       return rejectWithValue(error);
+    }
+  }
+);
+
+export const putValueAsyncTodo = createAsyncThunk(
+  "todos/putValueAsyncTodo",
+  async (payload, { rejectWithValue }) => {
+    try {
+      const { data } = await putTodo(payload.id, { value: payload.title });
+      return data;
+    } catch (error) {
+      rejectWithValue(error);
     }
   }
 );
@@ -118,6 +129,11 @@ const todosSlice = createSlice({
     },
     [deleteAsyncTodo.fulfilled]: (state, { payload }) => {
       state.todos = state.todos.filter((todo) => todo.id !== payload.id);
+    },
+    [putValueAsyncTodo.fulfilled]: (state, { payload }) => {
+      console.log(payload);
+      const selectedTodo = state.todos.find((todo) => todo.id === payload.id);
+      selectedTodo.value = payload.value;
     },
   },
 });

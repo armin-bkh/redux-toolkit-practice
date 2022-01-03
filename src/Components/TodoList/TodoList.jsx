@@ -7,6 +7,7 @@ import {
   editTodo,
   getAsyncTodos,
   putCheckAsyncTodo,
+  putValueAsyncTodo,
 } from "../../features/TodosSlice/TodosSlice";
 import TodoCompleteItems from "../TodoCompleteItems/TodoCompleteItems";
 import TodoForm from "../TodoForm/TodoForm";
@@ -30,7 +31,7 @@ const TodoList = () => {
   };
 
   const editHandler = (value) => {
-    dispatch(editTodo({ title: value, id: edit.id }));
+    dispatch(putValueAsyncTodo({ title: value, id: edit.id }));
     setEdit(null);
   };
 
